@@ -17,7 +17,7 @@ from huggingface_hub import hf_hub_download
 #gradio.helpers.CACHED_FOLDER = '/data/cache'
 
 pipe = StableVideoDiffusionPipeline.from_pretrained(
-    "stabilityai/stable-video-diffusion-img2vid-xt", torch_dtype=torch.float16, variant="fp16"
+    "multimodalart/stable-video-diffusion", torch_dtype=torch.float16, variant="fp16"
 )
 pipe.to("cuda")
 pipe.unet = torch.compile(pipe.unet, mode="reduce-overhead", fullgraph=True)
