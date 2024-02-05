@@ -1,5 +1,5 @@
 ---
-title: Stable Video Diffusion
+title: Stable Video Diffusion 1.1
 emoji: 📺
 colorFrom: purple
 colorTo: purple
