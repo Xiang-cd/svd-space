@@ -122,5 +122,5 @@ with gr.Blocks() as demo:
   )
 
 if __name__ == "__main__":
-    demo.queue(max_size=20, api_open=False)
+    #demo.queue(max_size=20, api_open=False)
     demo.launch(share=True, show_api=False)
