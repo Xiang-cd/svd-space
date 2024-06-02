@@ -13,7 +13,7 @@ from PIL import Image
 import uuid
 import random
 from huggingface_hub import hf_hub_download
-
+import spaces
 #gradio.helpers.CACHED_FOLDER = '/data/cache'
 
 pipe = StableVideoDiffusionPipeline.from_pretrained(
@@ -25,6 +25,7 @@ pipe.unet = torch.compile(pipe.unet, mode="reduce-overhead", fullgraph=True)
 
 max_64_bit_int = 2**63 - 1
 
+@spaces.GPU
 def sample(
     image: Image,
     seed: Optional[int] = 42,
