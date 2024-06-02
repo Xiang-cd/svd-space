@@ -118,7 +118,7 @@ with gr.Blocks() as demo:
     inputs=image,
     outputs=[video, seed],
     fn=sample,
-    cache_examples=True,
+    cache_examples="lazy",
   )
 
 if __name__ == "__main__":
