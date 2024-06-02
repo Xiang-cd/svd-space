@@ -20,7 +20,7 @@ pipe = StableVideoDiffusionPipeline.from_pretrained(
     "multimodalart/stable-video-diffusion", torch_dtype=torch.float16, variant="fp16"
 )
 pipe.to("cuda")
-pipe.unet = torch.compile(pipe.unet, mode="reduce-overhead", fullgraph=True)
+#pipe.unet = torch.compile(pipe.unet, mode="reduce-overhead", fullgraph=True)
 #pipe.vae = torch.compile(pipe.vae, mode="reduce-overhead", fullgraph=True)
 
 max_64_bit_int = 2**63 - 1
