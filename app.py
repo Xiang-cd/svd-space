@@ -25,7 +25,7 @@ pipe.to("cuda")
 
 max_64_bit_int = 2**63 - 1
 
-@spaces.GPU
+@spaces.GPU(duration=120)
 def sample(
     image: Image,
     seed: Optional[int] = 42,
