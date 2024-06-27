@@ -17,12 +17,27 @@ import spaces
 #gradio.helpers.CACHED_FOLDER = '/data/cache'
 
 pipe = StableVideoDiffusionPipeline.from_pretrained(
-    "multimodalart/stable-video-diffusion", torch_dtype=torch.float16, variant="fp16"
+    "stabilityai/stable-video-diffusion-img2vid-xt", torch_dtype=torch.float16, variant="fp16",
+    cache_dir="./base_ckpts",
 )
 pipe.to("cuda")
 #pipe.unet = torch.compile(pipe.unet, mode="reduce-overhead", fullgraph=True)
 #pipe.vae = torch.compile(pipe.vae, mode="reduce-overhead", fullgraph=True)
 
+def download_model():
+    REPO_ID = 'GraceZhao/SVD-CIL-512'
+    ckpt_dir = './checkpoints'
+    filename_list = ['checkpoint-step-20000.ckpt']
+    if not os.path.exists(ckpt_dir):
+        os.makedirs(ckpt_dir)
+    for filename in filename_list:
+        local_file = os.path.join(ckpt_dir, filename)
+        if not os.path.exists(local_file):
+            hf_hub_download(repo_id=REPO_ID, filename=filename, local_dir=ckpt_dir, force_download=True)
+
+download_model()
+state_dict = torch.load('./checkpoints/checkpoint-step-20000.ckpt', map_location='cpu')
+print(pipe.unet.load_state_dict(state_dict['state_dict']))
 max_64_bit_int = 2**63 - 1
 
 @spaces.GPU(duration=120)
@@ -118,7 +133,7 @@ with gr.Blocks() as demo:
     inputs=image,
     outputs=[video, seed],
     fn=sample,
-    cache_examples="lazy",
+    # cache_examples="lazy",
   )
 
 if __name__ == "__main__":
